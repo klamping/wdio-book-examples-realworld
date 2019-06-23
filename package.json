@@ -1,0 +1,25 @@
+{
+  "name": "wdio-book-examples-realworld",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@wdio/cli": "^5.10.4",
+    "chai": "^4.2.0",
+    "chance": "^1.0.18"
+  },
+  "devDependencies": {
+    "@wdio/local-runner": "^5.10.4",
+    "@wdio/mocha-framework": "^5.10.1",
+    "@wdio/spec-reporter": "^5.9.3",
+    "@wdio/sync": "^5.10.1",
+    "chromedriver": "^75.0.0",
+    "wdio-chromedriver-service": "^5.0.2"
+  }
+}
