@@ -1,4 +1,5 @@
 const { URL } = require('url');
+const { mapText } = require('../../utils/functions')
 
 class Generic {
     constructor (url) {
@@ -11,6 +12,13 @@ class Generic {
     load() {
         browser.url(this.url);
     }
+    get $siteHeader () { return $('[data-qa-id="site-header"]'); }
+    get $siteNav () { return $('[data-qa-id="site-nav"]'); }
+    get $$siteNavLinks () { return this.$siteNav.$$('a'); }
+    get siteNavLinksText () {
+        return this.$$siteNavLinks.map(mapText);
+    }
+    get $siteFooter () { return $('[data-qa-id="site-footer"]'); }
 }
 
 module.exports = Generic;

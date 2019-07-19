@@ -8,6 +8,8 @@ describe('Post Editor', function () {
     before(function () {
         auth.load();
         auth.login(user1.email, user1.password);
+    });
+    beforeEach(function () {
         editor.load();
     })
     it('should load page properly', function () {
@@ -39,4 +41,29 @@ describe('Post Editor', function () {
         // We'll talk about a better way to clean later on
         article.$delete.click()
     });
+
+    describe('Unpublished alerts', function () {
+        beforeEach(function () {
+            // start adding some data
+            editor.$title.setValue('Title');
+        });
+        afterEach(function () {
+            // close alert so we can move on
+            browser.dismissAlert();
+        });
+
+        it('should warn try changing the page without publishing', function () {
+            // try refreshing the page
+            browser.refresh();
+
+            expect(() => browser.getAlertText()).to.not.throw();
+        });
+
+        it('should warn you change URL without publishing', function () {
+            // try going to the homepage
+            $('=Home').click();
+
+            expect(() => browser.getAlertText()).to.not.throw();
+        })
+    })
 })
