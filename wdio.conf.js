@@ -1,4 +1,5 @@
 const Chance = require('chance');
+const Api = require('./utils/Api');
 
 if (!process.env.SEED) {
     process.env.SEED = Math.random();
@@ -174,6 +175,22 @@ exports.config = {
         //     throughput: 450*1024
         // });
         global.chance = new Chance(process.env.SEED);
+
+        global.api = new Api('https://conduit.productionready.io/api');
+
+        browser.addCommand('loginViaApi', function (user) {
+            const token = browser.call(() => {
+                return global.api.getAuthToken(user);
+            });
+
+            // load the base page so we can set the token
+            browser.url('./');
+
+            // inject the auth token
+            browser.execute((browserToken) => {
+                window.localStorage.setItem('id_token', browserToken);
+            }, token);
+        })
     },
     /**
      * Runs before a WebdriverIO command gets executed.

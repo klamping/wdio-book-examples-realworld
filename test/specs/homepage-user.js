@@ -1,25 +1,12 @@
 const expect = require('chai').expect;
-const home = require('../pageObjects/home.page');
 const auth = require('../pageObjects/auth.page');
+const home = new require('../pageObjects/Home.page')();
 const { user1 } = require('../fixtures/users');
-const Api = require('../../utils/Api');
 
 describe('Homepage - User', function () {
     before(function () {
-        const api = new Api('https://conduit.productionready.io/api');
-        const token = browser.call(() => {
-            return api.getAuthToken(user1);
-        });
+        browser.loginViaApi(user1);
 
-        // load the page
-        home.load();
-
-        // inject the auth token
-        browser.execute((browserToken) => {
-            window.localStorage.setItem('id_token', browserToken);
-        }, token);
-
-        // reload the page
         home.loadAsUser();
     })
     it('should load properly', function () {
@@ -61,9 +48,15 @@ describe('Homepage - User', function () {
                 home.clickTab('Your Feed');
             }
         })
-        it('should show most recent articles from people you follow', function () {
-            console.log('homepage-user.js :53', home.currentFeed);
-            expect(home.currentFeed.$$articles).to.have.lengthOf.above(0)
+        it('should show articles just from people you follow', function () {
+            expect(home.currentFeed.$$articles).to.have.length(1)
+        })
+        it('should show most recent article first', function () {
+            const firstArticleDetails = home.currentFeed.articles[0].getDetails();
+            expect(firstArticleDetails).to.have.property('author', 'demowdioA');
+            expect(firstArticleDetails).to.have.property('date', 'July 8, 2019');
+            expect(firstArticleDetails).to.have.property('title', 'Test Article');
+            expect(firstArticleDetails).to.have.property('description', 'Testing some things');
         })
     })
 })

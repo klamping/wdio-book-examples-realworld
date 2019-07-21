@@ -1,16 +1,15 @@
 const Generic = require('./Generic.page');
+const Feed = require('./Feed.component');
 const { mapText } = require('../../utils/functions')
 
-class Feed {
-    constructor (selector) {
-        this.container = $(selector);
-    }
-    get $$articles () { return this.container.$$('[data-qa-type="article-preview"]') }
-}
-
 class Home extends Generic {
-    constructor () {
-        super('./')
+    constructor (url) {
+        url = url || './';
+        super(url)
+    }
+    load() {
+        super.load();
+        this.currentFeed.waitForLoad();
     }
     loadAsUser() {
         this.load();
@@ -25,7 +24,8 @@ class Home extends Generic {
     clickTab (tabText) {
         const tabToClick = this.$$feedTabs.find($tab => $tab.getText() === tabText);
         tabToClick.click();
+        this.currentFeed.waitForLoad();
     }
 }
 
-module.exports = new Home();
+module.exports = Home;

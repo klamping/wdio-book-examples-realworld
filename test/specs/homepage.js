@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const home = require('../pageObjects/home.page');
+const home = new require('../pageObjects/Home.page')();
 
 describe('Homepage - Anonymous', function () {
     before(function () {
