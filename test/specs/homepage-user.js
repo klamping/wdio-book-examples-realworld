@@ -1,6 +1,7 @@
 const expect = require('chai').expect;
 const auth = require('../pageObjects/auth.page');
-const home = new require('../pageObjects/Home.page')();
+const Home = require('../pageObjects/Home.page');
+const home = new Home();
 const { user1 } = require('../fixtures/users');
 
 describe('Homepage - User', function () {

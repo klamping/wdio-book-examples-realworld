@@ -19,7 +19,6 @@ describe('Tags Feed', function () {
         const articleResponse = browser.call(() => {
             return global.api.createArticle(user1, articleDetails);
         });
-        console.log('tagPage.js :22', articleResponse);
 
         tagPage = new TagPage(tagName);
 
